@@ -3,7 +3,7 @@
 """
 Module docstring: One line description of what your program does.
 """
-__author__ = "Your Github Username"
+__author__ = 'ericmhanson'
 
 import sys
 
@@ -11,7 +11,7 @@ def nest_bracks(line):
     openers = ('(', '[', '<', '{', '(*')
     closers = (')', ']', '>', '}', '*)')
     stack = []
-    index = 0
+    count = 0
 
     while line:
         token = line[0]
@@ -19,19 +19,20 @@ def nest_bracks(line):
             token = '(*'
         elif line.startswith('*)'):
             token = '*)'
+        count += 1
+        line = line[len(token):]
         
         if token in openers:
             stack.append(token)
         elif token in closers:
-            if stack[-1] == openers[closers.index(token)]:
-                stack.pop()
-            else:
-                return 'No ' + str(index)
-        line = line[len(token):]
-        index += 1
-
-    if len(stack) == 0:
-        return 'Yes'
+            i = closers.index(token)
+            expected_opener = openers[i]
+            if not stack or stack.pop() != expected_opener:
+                return 'No ' + str(count)
+    
+    if stack:
+        return 'No ' + str(count)
+    return 'Yes'
 
 def main(args):
     with open(args) as document_text:
