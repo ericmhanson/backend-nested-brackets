@@ -8,7 +8,7 @@ __author__ = 'ericmhanson'
 import sys
 
 def nest_bracks(line):
-    openers = ('(', '[', '<', '{', '(*')
+    # openers = ('(', '[', '<', '{', '(*')
     closers = (')', ']', '>', '}', '*)')
     stack = []
     count = 0
